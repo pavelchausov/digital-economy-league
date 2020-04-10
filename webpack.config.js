@@ -1,22 +1,23 @@
 const path = require('path');
 const HtlmWebpackPlugin = require('html-webpack-plugin');
+
 const SRC_DIR = path.join(__dirname, '/src');
 const BUILD_DIR = path.join(__dirname, '/build');
 
 module.exports = {
-  entry: `${SRC_DIR}/index.jsx`,
+  entry: `${SRC_DIR}/index.js`,
   output: {
-    filename: `bundle.js`,
+    filename: 'bundle.js',
     path: BUILD_DIR,
     publicPath: '',
-    //publicPath: '/',
+    // publicPath: '/',
   },
   module: {
     rules: [
       {
-        test: /\.jsx/,
+        test: /\.js/,
         exclude: /node_modules/,
-        use: [ 'babel-loader' ],
+        use: ['babel-loader'],
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
@@ -32,10 +33,10 @@ module.exports = {
           'style-loader',
           'css-loader',
         ],
-      }
+      },
     ],
   },
   plugins: [
-    new HtlmWebpackPlugin({ template: `${SRC_DIR}/index.html`}),
+    new HtlmWebpackPlugin({ template: `${SRC_DIR}/index.html` }),
   ],
 };
