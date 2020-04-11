@@ -9,7 +9,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: BUILD_DIR,
-    publicPath: '',
+    publicPath: '/',
     // publicPath: '/',
   },
   module: {
@@ -39,4 +39,7 @@ module.exports = {
   plugins: [
     new HtlmWebpackPlugin({ template: `${SRC_DIR}/index.html` }),
   ],
+  devServer: {
+    historyApiFallback: true,
+  },
 };

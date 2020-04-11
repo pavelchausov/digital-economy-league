@@ -1,7 +1,14 @@
 import React from 'react';
+import { withRouter, useParams } from 'react-router-dom';
 
-const DetailPage = () => (
-  <div className="main-container">Detail Page</div>
-);
+const DetailPage = () => {
+  const { filmId } = useParams();
+  return (
+    <div className="main-container">
+      Detail Page
+      {filmId}
+    </div>
+  );
+};
 
-export default DetailPage;
+export default withRouter(DetailPage);

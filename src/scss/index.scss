@@ -1,9 +1,16 @@
+* {
+  box-sizing: border-box;
+}
 body {
   background-color: midnightblue;
+}
+h1 {
+  margin: 0;
 }
 .main-container {
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 30px;
   background: #fff;
+  height: 100vh;
 }
