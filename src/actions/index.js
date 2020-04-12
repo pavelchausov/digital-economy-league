@@ -12,14 +12,44 @@ const setSearchQuery = (payload) => ({
   payload,
 });
 
-const setSearchQueryAsync = (query) => (dispatch) => {
+const setFindedFilmsAsync = (query) => (dispatch) => {
   axios
     .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
     .then(({ data: { Search } }) => {
-      dispatch(setFindedFilms(Search));
+      dispatch(setFindedFilms([...Search]));
+    })
+    .catch((error) => {
+      dispatch(setFindedFilms([]));
+      console.log(error);
+    });
+};
+
+const setDetailFilmId = (payload) => ({
+  type: 'SET_DETAIL_FILM_ID',
+  payload,
+});
+
+const setDetailFilmData = (payload) => ({
+  type: 'SET_DETAIL_FILM_DATA',
+  payload,
+});
+
+const setDetailFilmDataAsync = (imdbId) => (dispatch) => {
+  axios
+    .get(`http://www.omdbapi.com/?apikey=${apikey}&i=${imdbId}`)
+    .then((response) => {
+      dispatch(setDetailFilmData(response.data));
+      console.log('callback: ', response);
     })
     .catch((error) => {
       console.log(error);
     });
 };
-export { setFindedFilms, setSearchQuery, setSearchQueryAsync };
+
+export {
+  setFindedFilms,
+  setSearchQuery,
+  setFindedFilmsAsync,
+  setDetailFilmId,
+  setDetailFilmDataAsync,
+};

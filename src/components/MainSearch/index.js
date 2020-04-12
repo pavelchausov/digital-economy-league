@@ -3,7 +3,7 @@ import React from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { debounce } from 'underscore';
-import { setSearchQuery, setFindedFilms, setSearchQueryAsync } from '../../actions';
+import { setSearchQuery, setFindedFilmsAsync } from '../../actions';
 
 
 const mapStateToProps = (state) => ({
@@ -17,7 +17,7 @@ const MainSearch = (props) => {
     const {
       actions: {
         setSearchQuery: setQuery,
-        setSearchQueryAsync: setFilms,
+        setFindedFilmsAsync: setFilms,
       },
     } = props;
     setQuery(query);
@@ -41,7 +41,7 @@ export default compose(
   connect(
     mapStateToProps,
     (dispatch) => ({
-      actions: bindActionCreators({ setSearchQuery, setSearchQueryAsync }, dispatch),
+      actions: bindActionCreators({ setSearchQuery, setFindedFilmsAsync }, dispatch),
     }),
   ),
 )(MainSearch);

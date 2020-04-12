@@ -1,6 +1,8 @@
 const initialState = {
   mainPageSearch: '',
   mainPageFilms: [],
+  detailFilmId: null,
+  detailFilmInfo: {},
 };
 
 const reducers = (state = initialState, action) => {
@@ -16,7 +18,21 @@ const reducers = (state = initialState, action) => {
       const { payload } = action;
       return {
         ...state,
-        mainPageFilms: payload,
+        mainPageFilms: [...payload],
+      };
+    }
+    case 'SET_DETAIL_FILM_ID': {
+      const { payload } = action;
+      return {
+        ...state,
+        detailFilmId: payload,
+      };
+    }
+    case 'SET_DETAIL_FILM_DATA': {
+      const { payload } = action;
+      return {
+        ...state,
+        detailFilmInfo: { ...payload },
       };
     }
     default:
