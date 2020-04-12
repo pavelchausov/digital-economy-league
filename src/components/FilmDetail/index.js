@@ -9,15 +9,15 @@ const mapStateToProps = (state) => ({
 const FilmsDetail = (props) => {
   useEffect(() => {
     const {
+      detailFilmId,
       actions: {
-        setDetailFilmId: setFilmId,
         setDetailFilmDataAsync: setFilmDataAsync
       },
     } = props;
-    setFilmId(props.filmIdURL);
-    setFilmDataAsync(props.filmIdURL);
+    // setFilmId(props.filmIdURL);
+    // setFilmDataAsync(props.detailFilmId);
   }, []);
-
+  console.log('=============================');
   console.log(props);
   const {
     detailFilmInfo: {

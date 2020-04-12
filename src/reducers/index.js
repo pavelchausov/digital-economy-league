@@ -3,6 +3,8 @@ const initialState = {
   mainPageFilms: [],
   detailFilmId: null,
   detailFilmInfo: {},
+  autocompleteSearchQuery: '',
+  autocompleteSearchResult: [],
 };
 
 const reducers = (state = initialState, action) => {
@@ -33,6 +35,20 @@ const reducers = (state = initialState, action) => {
       return {
         ...state,
         detailFilmInfo: { ...payload },
+      };
+    }
+    case 'SET_AUTOCOMPLETE_SEARCH_QUERY': {
+      const { payload } = action;
+      return {
+        ...state,
+        autocompleteSearchQuery: payload,
+      };
+    }
+    case 'SET_AUTOCOMPLETE_SEARCH_RESULT': {
+      const { payload } = action;
+      return {
+        ...state,
+        autocompleteSearchResult: [...payload],
       };
     }
     default:

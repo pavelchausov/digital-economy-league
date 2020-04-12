@@ -10,6 +10,8 @@ test('reducers', () => {
     detailFilmId: null,
     mainPageSearch: 'asd',
     detailFilmInfo: {},
+    autocompleteSearchQuery: '',
+    autocompleteSearchResult: [],
   });
 
   expect(reducers(undefined, {
@@ -20,6 +22,8 @@ test('reducers', () => {
     mainPageSearch: '',
     detailFilmId: '123avd',
     detailFilmInfo: {},
+    autocompleteSearchQuery: '',
+    autocompleteSearchResult: [],
   });
 
   expect(reducers(undefined, {
@@ -36,5 +40,36 @@ test('reducers', () => {
       Title: 'some title',
       Year: '1978',
     },
+    autocompleteSearchQuery: '',
+    autocompleteSearchResult: [],
+  });
+
+  expect(reducers(undefined, {
+    type: 'SET_AUTOCOMPLETE_SEARCH_QUERY',
+    payload: 'star',
+  })).toEqual({
+    mainPageFilms: [],
+    mainPageSearch: '',
+    detailFilmId: null,
+    detailFilmInfo: {},
+    autocompleteSearchQuery: 'star',
+    autocompleteSearchResult: [],
+  });
+  expect(reducers(undefined, {
+    type: 'SET_AUTOCOMPLETE_SEARCH_RESULT',
+    payload: [
+      { title: 'Star Wars', year: 1977 },
+      { title: 'Star Trek', year: 1980 },
+    ],
+  })).toEqual({
+    mainPageFilms: [],
+    mainPageSearch: '',
+    detailFilmId: null,
+    detailFilmInfo: {},
+    autocompleteSearchQuery: '',
+    autocompleteSearchResult: [
+      { title: 'Star Wars', year: 1977 },
+      { title: 'Star Trek', year: 1980 },
+    ],
   });
 });

@@ -15,8 +15,11 @@ const setSearchQuery = (payload) => ({
 const setFindedFilmsAsync = (query) => (dispatch) => {
   axios
     .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
-    .then(({ data: { Search } }) => {
-      dispatch(setFindedFilms([...Search]));
+    .then(({ data }) => {
+      const { Search, Response } = data;
+      if (Response) {
+        dispatch(setFindedFilms([...Search]));
+      }
     })
     .catch((error) => {
       dispatch(setFindedFilms([]));
@@ -39,9 +42,35 @@ const setDetailFilmDataAsync = (imdbId) => (dispatch) => {
     .get(`http://www.omdbapi.com/?apikey=${apikey}&i=${imdbId}`)
     .then((response) => {
       dispatch(setDetailFilmData(response.data));
-      console.log('callback: ', response);
+      // console.log('callback: ', response);
     })
     .catch((error) => {
+      console.log(error);
+    });
+};
+
+const setAutocompleteSearchQuery = (payload) => ({
+  type: 'SET_AUTOCOMPLETE_SEARCH_QUERY',
+  payload,
+});
+
+const setAutocompleteSearchResult = (payload) => ({
+  type: 'SET_AUTOCOMPLETE_SEARCH_RESULT',
+  payload,
+});
+
+const setAutocompleteSearchResultAsync = (query) => (dispatch) => {
+  axios
+    .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
+    .then(({ data }) => {
+      const { Search, Response } = data;
+      // console.log({ data });
+      if (Response) {
+        dispatch(setAutocompleteSearchResult([...Search]));
+      }
+    })
+    .catch((error) => {
+      dispatch(setAutocompleteSearchResult([]));
       console.log(error);
     });
 };
@@ -52,4 +81,7 @@ export {
   setFindedFilmsAsync,
   setDetailFilmId,
   setDetailFilmDataAsync,
+  setAutocompleteSearchQuery,
+  setAutocompleteSearchResult,
+  setAutocompleteSearchResultAsync,
 };
