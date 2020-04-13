@@ -23,9 +23,11 @@
     "axios": "^0.19.2",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
+    "react-autosuggest": "^10.0.0",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
+    "react-typeahead": "^2.0.0-alpha.8",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "underscore": "^1.10.2"

@@ -17,8 +17,8 @@ const FilmsDetail = (props) => {
     // setFilmId(props.filmIdURL);
     // setFilmDataAsync(props.detailFilmId);
   }, []);
-  console.log('=============================');
-  console.log(props);
+  // console.log('=============================');
+  // console.log(props);
   const {
     detailFilmInfo: {
       Title,
