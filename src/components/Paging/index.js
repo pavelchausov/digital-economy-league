@@ -43,6 +43,9 @@ const Paging = (props) => {
     setInputValue(e.target.value);
   };
   const handleInputSubmit = () => {
+    if (inputValue === '') {
+      return;
+    }
     changePage(query, inputValue, props);
   };
 
