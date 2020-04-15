@@ -3,34 +3,43 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setDetailFilmId, setDetailFilmDataAsync } from '../../actions';
 
-const mapStateToProps = (state) => ({
-  ...state,
-});
-const FilmsDetail = (props) => {
-  useEffect(() => {
-    const {
-      detailFilmId,
-      actions: {
-        setDetailFilmDataAsync: setFilmDataAsync
-      },
-    } = props;
-    // setFilmId(props.filmIdURL);
-    // setFilmDataAsync(props.detailFilmId);
-  }, []);
-  // console.log('=============================');
-  // console.log(props);
+
+const mapStateToProps = (store) => {
   const {
-    detailFilmInfo: {
-      Title,
-      Year,
-      Rated,
-      Released,
-      Runtime,
-      Genre,
-      Plot,
-      Poster,
+    state: {
+      detailFilmInfo: filmData,
     },
+    uiState: {
+      isDetailPageLoadingData: isDataLoading,
+    },
+  } = store;
+  return {
+    filmData,
+    isDataLoading,
+  };
+};
+const FilmsDetail = (props) => {
+  const {
+    filmData,
+    isDataLoading,
   } = props;
+  if (isDataLoading) {
+    return (<div>LOADING...</div>);
+  }
+  const {
+    Title,
+    Year,
+    Rated,
+    Released,
+    Runtime,
+    Genre,
+    Plot,
+    Poster,
+    Response,
+  } = filmData;
+  if (Response === 'False') {
+    return (<div>INVALID FILM ID...</div>);
+  }
   return (
     <div className="film-container">
       <h3>{Title}</h3>

@@ -1,5 +1,7 @@
 const initialState = {
-  mainPageSearch: '',
+  mainSearchQuery: '',
+  mainSearchPageNumber: 1,
+  mainSearchTotalPages: 1,
   mainPageFilms: [],
   detailFilmId: null,
   detailFilmInfo: {},
@@ -13,7 +15,7 @@ const reducers = (state = initialState, action) => {
       const { payload } = action;
       return {
         ...state,
-        mainPageSearch: payload,
+        mainSearchQuery: payload,
       };
     }
     case 'SET_FINDED_FILMS': {
@@ -21,6 +23,20 @@ const reducers = (state = initialState, action) => {
       return {
         ...state,
         mainPageFilms: [...payload],
+      };
+    }
+    case 'SET_SEARCH_PAGE_NUMBER': {
+      const { payload } = action;
+      return {
+        ...state,
+        mainSearchPageNumber: payload,
+      };
+    }
+    case 'SET_SEARCH_TOTAL_PAGES': {
+      const { payload } = action;
+      return {
+        ...state,
+        mainSearchTotalPages: payload,
       };
     }
     case 'SET_DETAIL_FILM_ID': {
@@ -56,4 +72,36 @@ const reducers = (state = initialState, action) => {
   }
 };
 
-export { reducers };
+const initialUiState = {
+  isMainPageLoadingData: false,
+  isDetailPageLoadingData: true,
+  isAutocompleteLoadingData: false,
+};
+
+const uiStateReducers = (state = initialUiState, action) => {
+  switch (action.type) {
+    case 'SET_MAIN_PAGE_LOADING': {
+      const { payload } = action;
+      return {
+        ...state,
+        isMainPageLoadingData: payload,
+      };
+    }
+    case 'SET_DETAIL_PAGE_LOADING': {
+      const { payload } = action;
+      return {
+        ...state,
+        isDetailPageLoadingData: payload,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+export {
+  reducers,
+  uiStateReducers,
+  initialState,
+  initialUiState,
+};

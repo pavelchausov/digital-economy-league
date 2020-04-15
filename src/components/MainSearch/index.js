@@ -6,30 +6,18 @@ import { debounce } from 'underscore';
 import { setSearchQuery, setFindedFilmsAsync } from '../../actions';
 
 
-const mapStateToProps = (state) => ({
-  store: {
-    queryString: state.mainPageSearch,
-  },
-});
+const mapStateToProps = () => ({});
+const changeSearchQuery = (query, props) => {
+  const { actions } = props;
+  actions.setSearchQuery(query);
+  actions.setFindedFilmsAsync(query);
+};
+const changeSearchQueryDebounced = debounce(changeSearchQuery, 400);
 
 const MainSearch = (props) => {
-  const changeSearchQuery = (query) => {
-    const {
-      actions: {
-        setSearchQuery: setQuery,
-        setFindedFilmsAsync: setFilms,
-      },
-    } = props;
-    setQuery(query);
-    setFilms(query);
-  };
-  const changeSearchQueryDebounced = debounce(changeSearchQuery, 400);
   const handleChange = (e) => {
-    changeSearchQueryDebounced(e.target.value);
+    changeSearchQueryDebounced(e.target.value, props);
   };
-
-  // console.log('props: ', props);
-
   return (
     <div className="search-container">
       <input type="search" onChange={handleChange} />

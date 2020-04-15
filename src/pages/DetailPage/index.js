@@ -7,22 +7,18 @@ import AutocompleteSearch from '../../components/AutocompleteSearch';
 // import AutocompleteWithoutRedux from '../../components/AutocompleteWithoutRedux';
 import { setDetailFilmId, setDetailFilmDataAsync } from '../../actions';
 
-const mapStateToProps = (state) => ({
-  storeFilmId: state.detailFilmId,
-});
+const mapStateToProps = () => ({});
 
 const DetailPage = (props) => {
   const { filmId } = useParams();
 
   useEffect(() => {
     const {
-      storeFilmId,
       actions: {
         setDetailFilmId: setFilmId,
         setDetailFilmDataAsync: setFilmData,
       },
     } = props;
-    // setFilmId(filmId);
     setFilmData(filmId);
     setFilmId(filmId);
   });
@@ -31,7 +27,6 @@ const DetailPage = (props) => {
       <Link to="/">Назад</Link>
       <AutocompleteSearch />
       <div className="main-container">
-        {/* <FilmDetail filmIdURL={filmId} /> */}
         <FilmDetail />
       </div>
     </>

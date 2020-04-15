@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { DetailPage, MainPage } from './pages';
 
@@ -12,6 +12,9 @@ const App = () => (
       </Route>
       <Route exact path="/film/:filmId">
         <DetailPage />
+      </Route>
+      <Route path="*">
+        <Redirect to="/" />
       </Route>
     </Switch>
   </Router>

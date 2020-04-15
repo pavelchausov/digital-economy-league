@@ -8,10 +8,8 @@ import Autosuggest from 'react-autosuggest';
 import { setAutocompleteSearchQuery, setAutocompleteSearchResultAsync } from '../../actions';
 
 
-const mapStateToProps = (state) => ({
-  store: {
-    autocompleteSearchResult: state.autocompleteSearchResult,
-  },
+const mapStateToProps = ({ state: { autocompleteSearchResult } }) => ({
+  autocompleteSearchResult,
 });
 
 const changeSearchQuery = (query, props) => {
@@ -24,7 +22,7 @@ const changeSearchQuery = (query, props) => {
 const changeSearchQueryDebounced = debounce(changeSearchQuery, 300);
 
 const AutocompleteSearch = (props) => {
-  const { store: { autocompleteSearchResult } } = props;
+  const { autocompleteSearchResult } = props;
   console.log('prop changed - autocomplete search result -> ', autocompleteSearchResult);
   const getSuggestionValue = (suggestion) => suggestion.Title;
 

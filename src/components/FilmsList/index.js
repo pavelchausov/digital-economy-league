@@ -3,13 +3,35 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const mapStateToProps = (state) => ({
-  films: state.mainPageFilms,
-});
+// const mapStateToProps = ({ mainPageFilms, isMainPageLoadingData }) => ({
+//   films: mainPageFilms,
+//   isDataLoading: isMainPageLoadingData,
+// });
+
+const mapStateToProps = (store) => {
+  const {
+    state: {
+      mainPageFilms: films,
+    },
+    uiState: {
+      isMainPageLoadingData: isDataLoading,
+    },
+  } = store;
+  return {
+    films,
+    isDataLoading,
+  };
+};
 
 const FilmsList = (props) => {
-  const { films } = props;
-  console.log(films);
+  const { films, isDataLoading } = props;
+
+  // return (<></>);
+  if (isDataLoading) {
+    return (
+      <div>LOADING...</div>
+    );
+  }
   return (
     <div className="films-container">
       {films.map((item) => {

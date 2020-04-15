@@ -2,6 +2,16 @@ import axios from 'axios';
 
 const apikey = '66f7d889';
 
+const setMainPageLoadingStatus = (payload) => ({
+  type: 'SET_MAIN_PAGE_LOADING',
+  payload,
+});
+
+const setDetailPageLoadingStatus = (payload) => ({
+  type: 'SET_DETAIL_PAGE_LOADING',
+  payload,
+});
+
 const setFindedFilms = (payload) => ({
   type: 'SET_FINDED_FILMS',
   payload,
@@ -12,14 +22,35 @@ const setSearchQuery = (payload) => ({
   payload,
 });
 
-const setFindedFilmsAsync = (query) => (dispatch) => {
+const setSearchPageNumber = (payload) => ({
+  type: 'SET_SEARCH_PAGE_NUMBER',
+  payload,
+});
+const setSearchTotalPages = (payload) => ({
+  type: 'SET_SEARCH_TOTAL_PAGES',
+  payload,
+});
+
+const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
+  if (query.length < 3) {
+    return;
+  }
+  dispatch(setMainPageLoadingStatus(true));
+  console.log('main search started: ' + query);
   axios
-    .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
-    .then(({ data }) => {
-      const { Search, Response } = data;
-      if (Response) {
+    .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}&page=${page}`)
+    .then((res) => {
+      const { data } = res;
+      const { Search, Response, totalResults } = data;
+      if (Response === 'True') {
         dispatch(setFindedFilms([...Search]));
+        dispatch(setSearchPageNumber(page));
+        dispatch(setSearchTotalPages(Math.ceil(totalResults / 10)));
+      } else {
+        dispatch(setFindedFilms([]));
+        dispatch(setSearchPageNumber(1));
       }
+      dispatch(setMainPageLoadingStatus(false));
     })
     .catch((error) => {
       dispatch(setFindedFilms([]));
@@ -38,11 +69,14 @@ const setDetailFilmData = (payload) => ({
 });
 
 const setDetailFilmDataAsync = (imdbId) => (dispatch) => {
+  dispatch(setDetailPageLoadingStatus(true));
   axios
     .get(`http://www.omdbapi.com/?apikey=${apikey}&i=${imdbId}`)
-    .then((response) => {
-      dispatch(setDetailFilmData(response.data));
-      // console.log('callback: ', response);
+    .then(({ data }) => {
+      dispatch(setDetailFilmData({
+        ...data,
+      }));
+      dispatch(setDetailPageLoadingStatus(false));
     })
     .catch((error) => {
       console.log(error);
@@ -60,7 +94,6 @@ const setAutocompleteSearchResult = (payload) => ({
 });
 
 const setAutocompleteSearchResultAsync = (query) => (dispatch) => {
-  console.log('gonna send request: ', query)
   axios
     .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
     .then(({ data }) => {
