@@ -60,13 +60,15 @@ const setAutocompleteSearchResult = (payload) => ({
 });
 
 const setAutocompleteSearchResultAsync = (query) => (dispatch) => {
+  console.log('gonna send request: ', query)
   axios
     .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
     .then(({ data }) => {
       const { Search, Response } = data;
-      // console.log({ data });
-      if (Response) {
+      if (Response === 'True') {
         dispatch(setAutocompleteSearchResult([...Search]));
+      } else {
+        dispatch(setAutocompleteSearchResult([]));
       }
     })
     .catch((error) => {

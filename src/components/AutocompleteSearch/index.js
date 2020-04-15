@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { debounce } from 'underscore';
-import { withRouter, Link, Redirect } from 'react-router-dom';
-import { Typeahead } from 'react-typeahead';
+import { withRouter, Link, useHistory } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 import { setAutocompleteSearchQuery, setAutocompleteSearchResultAsync } from '../../actions';
 
@@ -15,85 +14,19 @@ const mapStateToProps = (state) => ({
   },
 });
 
+const changeSearchQuery = (query, props) => {
+  console.log(query);
+  const { actions } = props;
+  // actions.setAutocompleteSearchQuery(query);
+  actions.setAutocompleteSearchResultAsync(query);
+};
+
+const changeSearchQueryDebounced = debounce(changeSearchQuery, 300);
 
 const AutocompleteSearch = (props) => {
-
-  const changeSearchQuery = (query) => {
-    const {
-      actions: {
-        setAutocompleteSearchQuery: setQuery,
-        setAutocompleteSearchResultAsync: setResult,
-      },
-    } = props;
-    setQuery(query);
-    setResult(query);
-  };
-  const changeSearchQueryDebounced = debounce(changeSearchQuery, 400);
-  const handleChange = (e) => {
-    changeSearchQueryDebounced(e.target.value);
-  };
-  // console.log('autocomplete');
-  // console.log(props.store.autocompleteSearchResult);
   const { store: { autocompleteSearchResult } } = props;
-
-  // const renderResultList = (searchResult) => {
-  //   // console.log({searchResult})
-  //   return (
-  //     <ul className="autocomplete-result">
-  //       {searchResult.map((element, i) => {
-  //         const {
-  //           Title: title,
-  //           Year: year,
-  //           imdbID,
-  //         } = element;
-  //         const key = `${imdbID}${i}ac`;
-  //         const link = `/film/${imdbID}`;
-  //         return (
-  //           <li key={key}>
-  //             <Link to={{
-  //               pathname: link,
-  //               state: {
-  //                 filmId: imdbID,
-  //               },
-  //             }}>{title}</Link>
-  //           </li>
-  //         );
-  //       })}
-  //     </ul>
-  //   );
-  // };
-
-  
-
-  // return (
-  //   <div className="search-container">
-  //     <input type="search" onChange={handleChange} />
-  //     {(autocompleteSearchResult.length > 0) ? renderResultList(autocompleteSearchResult) : ''}
-  //   </div>
-  // );
-  // return (
-  //   <Typeahead onKeyUp={handleChange} customListComponent={(autocompleteSearchResult.length > 0) ? renderResultList(autocompleteSearchResult) : <></>} />
-  // );
-  const languages = [
-    {
-      name: 'C',
-      year: 1972
-    },
-    {
-      name: 'Elm',
-      year: 2012
-    },
-  ];
-  const getSuggestions = (value) => {
-    // const inputValue = value.trim().toLowerCase();
-    // const inputLength = inputValue.length;
-  
-    // return inputLength === 0 ? [] : languages.filter(lang =>
-    //   lang.name.toLowerCase().slice(0, inputLength) === inputValue
-    // );
-    return props.store.autocompleteSearchResult;
-  };
-  const getSuggestionValue = suggestion => suggestion.Title;
+  console.log('prop changed - autocomplete search result -> ', autocompleteSearchResult);
+  const getSuggestionValue = (suggestion) => suggestion.Title;
 
   const renderSuggestion = (suggestion) => {
     const {
@@ -113,43 +46,37 @@ const AutocompleteSearch = (props) => {
   };
 
   const [queryValue, setQueryValue] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [redirect, setRedirect] = useState('');
+  // const [suggestions, setSuggestions] = useState(autocompleteSearchResult);
   const onChange = (event, { newValue }) => {
     setQueryValue(newValue);
-    changeSearchQuery(newValue);// меняем стор
   };
-  const onSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value));
+
+  const onSuggestionsFetchRequested = ({ value, reason }) => {
+    // 123 <====<===
+    // setSuggestions(autocompleteSearchResult);
+    if (reason === 'input-changed') {
+      changeSearchQueryDebounced(value, props);
+    }
   };
+
   const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
+    // setSuggestions([]);
   };
+
   const inputProps = {
-    placeholder: 'Type a programming language',
+    placeholder: 'Type a film title',
     value: queryValue,
     onChange,
   };
 
-  const onSuggestionSelected = (e, suggestion) => {
-    console.log(suggestion);
-    const {
-      imdbID,
-    } = suggestion.suggestionValue;
+  const history = useHistory();
+  const onSuggestionSelected = (e, { suggestion: { imdbID } }) => {
     const link = `/film/${imdbID}`;
-    setRedirect(link);
+    history.push(link);
   };
-  if (redirect.length > 0) {
-    return (<Redirect to={{
-      pathname: '/film/tt0076759',
-      state: {
-        filmId: 'tt0076759',
-      },
-    }} />);
-  }
   return (
     <Autosuggest
-      suggestions={suggestions}
+      suggestions={autocompleteSearchResult}
       onSuggestionsFetchRequested={onSuggestionsFetchRequested}
       onSuggestionsClearRequested={onSuggestionsClearRequested}
       getSuggestionValue={getSuggestionValue}

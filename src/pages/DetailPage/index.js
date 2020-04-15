@@ -4,6 +4,7 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import FilmDetail from '../../components/FilmDetail';
 import AutocompleteSearch from '../../components/AutocompleteSearch';
+// import AutocompleteWithoutRedux from '../../components/AutocompleteWithoutRedux';
 import { setDetailFilmId, setDetailFilmDataAsync } from '../../actions';
 
 const mapStateToProps = (state) => ({
@@ -25,11 +26,6 @@ const DetailPage = (props) => {
     setFilmData(filmId);
     setFilmId(filmId);
   });
-  console.log({
-    filmIdFromRouter: filmId,
-    filmIdfromState: props.storeFilmId,
-  });
-
   return (
     <>
       <Link to="/">Назад</Link>
