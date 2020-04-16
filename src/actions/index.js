@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { debounce } from 'underscore';
 
 const apikey = '66f7d889';
 
@@ -79,7 +78,7 @@ const setDetailFilmData = (payload) => ({
 const setDetailFilmDataAsync = (imdbId) => (dispatch) => {
   dispatch(setDetailPageLoadingStatus(true));
   axios
-    .get(`http://www.omdbapi.com/?apikey=${apikey}&i=${imdbId}`)
+    .get(`https://www.omdbapi.com/?apikey=${apikey}&i=${imdbId}`)
     .then(({ data }) => {
       dispatch(setDetailFilmData({
         ...data,
@@ -103,7 +102,7 @@ const setAutocompleteSearchResult = (payload) => ({
 
 const setAutocompleteSearchResultAsync = (query) => (dispatch) => {
   axios
-    .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
+    .get(`https://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
     .then(({ data }) => {
       const { Search, Response } = data;
       if (Response === 'True') {
