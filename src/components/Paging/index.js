@@ -29,32 +29,61 @@ const mapStateToProps = (store) => {
 
 
 const Paging = (props) => {
+  console.log(props);
   const { currentPage, totalPagesCount, query } = props;
-  console.log('films list props', props);
+  // console.log('films list props', props);
   const [inputValue, setInputValue] = useState('');
-
   const handlePlus = () => {
-    changePage(query, currentPage + 1, props);
+    changePage(query, parseInt(currentPage, 10) + 1, props);
   };
   const handleMinus = () => {
-    changePage(query, currentPage - 1, props);
+    changePage(query, parseInt(currentPage, 10) - 1, props);
   };
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
-  const handleInputSubmit = () => {
+
+  const handleMoveClick = () => {
     if (inputValue === '') {
+      return;
+    }
+    const intInputValue = parseInt(inputValue, 10);
+    if (intInputValue < 1) {
+      alert(`Select page only in range from 1 to ${totalPagesCount}`);
+      return;
+    }
+    if (intInputValue > totalPagesCount) {
+      alert(`Select page only in range from 1 to ${totalPagesCount}`);
       return;
     }
     changePage(query, inputValue, props);
   };
+  const isPrevDisabled = () => (parseInt(currentPage, 10) === 1);
+  const isNextDisabled = () => (parseInt(currentPage, 10) === parseInt(totalPagesCount, 10));
 
+  if (query === '' || parseInt(totalPagesCount, 10) === 1) {
+    return (<></>);
+  }
   return (
     <div className="pagination">
       <div>
-        <button type="button" onClick={handleMinus}>Previous</button>
-        <span>{currentPage}</span>
-        <button type="button" onClick={handlePlus}>Next</button>
+        <button
+          type="button"
+          onClick={handleMinus}
+          disabled={isPrevDisabled()}
+        >
+          Previous
+        </button>
+        <span>
+          Current: {currentPage}
+        </span>
+        <button
+          type="button"
+          onClick={handlePlus}
+          disabled={isNextDisabled()}
+        >
+          Next
+        </button>
       </div>
       <div>
         <input
@@ -65,7 +94,7 @@ const Paging = (props) => {
           min={1}
           max={totalPagesCount}
         />
-        <button type="button" onClick={handleInputSubmit}>Move</button>
+        <button type="button" onClick={handleMoveClick}>Move</button>
       </div>
       <div>
         total: {totalPagesCount}
