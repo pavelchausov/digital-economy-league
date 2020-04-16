@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { reducers, uiStateReducers } from '../reducers';
+import { reducers, uiStateReducers } from './reducers';
 // eslint-disable-next-line no-underscore-dangle
 const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__;
 
