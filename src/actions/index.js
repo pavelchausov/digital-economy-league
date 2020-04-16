@@ -43,7 +43,7 @@ const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
   dispatch(setMainPageLoadingStatus(true));
   // console.log('main search started: ' + trimQuery);
   axios
-    .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${trimQuery}&page=${page}`)
+    .get(`https://www.omdbapi.com/?apikey=${apikey}&s=${trimQuery}&page=${page}`)
     .then((res) => {
       const { data } = res;
       const { Search, Response, totalResults } = data;
