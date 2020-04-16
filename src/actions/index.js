@@ -86,6 +86,7 @@ const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
     })
     .catch(() => {
       setMainPageSearchResults(dispatch, emptySearchResult);
+      dispatch(setMainPageLoadingStatus(false));
       // console.log(error);
     });
 };
@@ -125,7 +126,13 @@ const setAutocompleteSearchResult = (payload) => ({
   payload,
 });
 
+const setAutocompleteLoadingData = (payload) => ({
+  type: 'SET_AUTOCOMPLETE_LOADING',
+  payload,
+});
+
 const setAutocompleteSearchResultAsync = (query) => (dispatch) => {
+  dispatch(setAutocompleteLoadingData(true));
   axios
     .get(`https://www.omdbapi.com/?apikey=${apikey}&s=${query}`)
     .then(({ data }) => {
@@ -135,9 +142,11 @@ const setAutocompleteSearchResultAsync = (query) => (dispatch) => {
       } else {
         dispatch(setAutocompleteSearchResult([]));
       }
+      dispatch(setAutocompleteLoadingData(false));
     })
     .catch(() => {
       dispatch(setAutocompleteSearchResult([]));
+      dispatch(setAutocompleteLoadingData(false));
       // console.log(error);
     });
 };

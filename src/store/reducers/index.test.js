@@ -95,4 +95,11 @@ test('ui state reducers', () => {
     ...initialUiState,
     isDetailPageLoadingData: 123,
   });
+  expect(uiStateReducers(initialUiState, {
+    type: 'SET_AUTOCOMPLETE_LOADING',
+    payload: 123,
+  })).toEqual({
+    ...initialUiState,
+    isAutocompleteLoadingData: 123,
+  });
 });

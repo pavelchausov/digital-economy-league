@@ -102,6 +102,13 @@ const uiStateReducers = (state = initialUiState, action) => {
         isDetailPageLoadingData: payload,
       };
     }
+    case 'SET_AUTOCOMPLETE_LOADING': {
+      const { payload } = action;
+      return {
+        ...state,
+        isAutocompleteLoadingData: payload,
+      };
+    }
     default:
       return state;
   }

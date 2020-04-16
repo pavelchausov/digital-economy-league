@@ -49,12 +49,12 @@ const FilmsList = (props) => {
             Poster: posterSrc,
             imdbID,
           } = item;
-          // const imgSrc = (posterSrc)
+          const imgSrc = (posterSrc === 'N/A') ? noImg : posterSrc;
           return (
             <Link key={imdbID} to={`/film/${imdbID}`}>
               <div className="film-card">
                 <img
-                  src={noImg}
+                  src={imgSrc}
                   alt="poster"
                   className="film-card__img"
                 />

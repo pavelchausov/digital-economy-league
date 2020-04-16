@@ -7,10 +7,14 @@ import { withRouter, Link, useHistory } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 import { setAutocompleteSearchQuery, setAutocompleteSearchResultAsync } from '../../actions';
 
-
-const mapStateToProps = ({ state: { autocompleteSearchResult } }) => ({
-  autocompleteSearchResult,
-});
+const mapStateToProps = ({ state, uiState }) => {
+  const { autocompleteSearchResult } = state;
+  const { isAutocompleteLoadingData } = uiState;
+  return {
+    autocompleteSearchResult,
+    isAutocompleteLoadingData,
+  };
+};
 
 const changeSearchQuery = (query, props) => {
   const { actions } = props;
@@ -21,7 +25,10 @@ const changeSearchQuery = (query, props) => {
 const changeSearchQueryDebounced = debounce(changeSearchQuery, 300);
 
 const AutocompleteSearch = (props) => {
-  const { autocompleteSearchResult } = props;
+  const {
+    autocompleteSearchResult,
+    isAutocompleteLoadingData,
+  } = props;
   const getSuggestionValue = (suggestion) => suggestion.Title;
 
   const renderSuggestion = (suggestion) => {
@@ -73,18 +80,29 @@ const AutocompleteSearch = (props) => {
     history.push(link);
   };
   return (
-    <Autosuggest
-      suggestions={autocompleteSearchResult}
-      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion}
-      inputProps={inputProps}
-      onSuggestionSelected={onSuggestionSelected}
-    />
+    <>
+      <Autosuggest
+        suggestions={autocompleteSearchResult}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        onSuggestionSelected={onSuggestionSelected}
+      />
+      <DataLoadingStatus isLoading={isAutocompleteLoadingData} />
+    </>
   );
 };
 
+const DataLoadingStatus = ({ isLoading }) => {
+  if (!isLoading) {
+    return (<></>);
+  }
+  return (
+    <div>LOADING...</div>
+  );
+};
 
 export default compose(
   connect(
