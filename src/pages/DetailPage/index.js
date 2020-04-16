@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { withRouter, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import FilmDetail from '../../components/FilmDetail';
 import AutocompleteSearch from '../../components/AutocompleteSearch';
-// import AutocompleteWithoutRedux from '../../components/AutocompleteWithoutRedux';
 import { setDetailFilmId, setDetailFilmDataAsync } from '../../actions';
 
 const mapStateToProps = () => ({});
@@ -31,7 +30,6 @@ const DetailPage = (props) => {
   );
 };
 
-// export default withRouter(DetailPage);
 export default compose(
   connect(
     mapStateToProps,

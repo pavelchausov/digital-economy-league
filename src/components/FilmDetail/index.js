@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setDetailFilmId, setDetailFilmDataAsync } from '../../actions';

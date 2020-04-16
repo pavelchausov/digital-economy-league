@@ -13,7 +13,6 @@ const mapStateToProps = ({ state: { autocompleteSearchResult } }) => ({
 });
 
 const changeSearchQuery = (query, props) => {
-  console.log(query);
   const { actions } = props;
   // actions.setAutocompleteSearchQuery(query);
   actions.setAutocompleteSearchResultAsync(query);
@@ -28,7 +27,7 @@ const AutocompleteSearch = (props) => {
   const renderSuggestion = (suggestion) => {
     const {
       Title: title,
-      Year: year,
+      // Year: year,
       imdbID,
     } = suggestion;
     const link = `/film/${imdbID}`;

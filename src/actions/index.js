@@ -84,9 +84,9 @@ const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
       }
       dispatch(setMainPageLoadingStatus(false));
     })
-    .catch((error) => {
+    .catch(() => {
       setMainPageSearchResults(dispatch, emptySearchResult);
-      console.log(error);
+      // console.log(error);
     });
 };
 
@@ -110,8 +110,8 @@ const setDetailFilmDataAsync = (imdbId) => (dispatch) => {
       }));
       dispatch(setDetailPageLoadingStatus(false));
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
+      // console.log(error);
     });
 };
 
@@ -136,9 +136,9 @@ const setAutocompleteSearchResultAsync = (query) => (dispatch) => {
         dispatch(setAutocompleteSearchResult([]));
       }
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(setAutocompleteSearchResult([]));
-      console.log(error);
+      // console.log(error);
     });
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
@@ -29,9 +30,7 @@ const mapStateToProps = (store) => {
 
 
 const Paging = (props) => {
-  console.log(props);
   const { currentPage, totalPagesCount, query } = props;
-  // console.log('films list props', props);
   const [inputValue, setInputValue] = useState('');
   const handlePlus = () => {
     changePage(query, parseInt(currentPage, 10) + 1, props);
