@@ -23,7 +23,6 @@ const changeSearchQueryDebounced = debounce(changeSearchQuery, 300);
 
 const AutocompleteSearch = (props) => {
   const { autocompleteSearchResult } = props;
-  console.log('prop changed - autocomplete search result -> ', autocompleteSearchResult);
   const getSuggestionValue = (suggestion) => suggestion.Title;
 
   const renderSuggestion = (suggestion) => {
@@ -34,24 +33,25 @@ const AutocompleteSearch = (props) => {
     } = suggestion;
     const link = `/film/${imdbID}`;
     return (
-      <Link to={{
-        pathname: link,
-        state: {
-          filmId: imdbID,
-        },
-      }}>{title}</Link>
+      <Link
+        to={{
+          pathname: link,
+          state: {
+            filmId: imdbID,
+          },
+        }}
+      >
+        {title}
+      </Link>
     );
   };
 
   const [queryValue, setQueryValue] = useState('');
-  // const [suggestions, setSuggestions] = useState(autocompleteSearchResult);
   const onChange = (event, { newValue }) => {
     setQueryValue(newValue);
   };
 
   const onSuggestionsFetchRequested = ({ value, reason }) => {
-    // 123 <====<===
-    // setSuggestions(autocompleteSearchResult);
     if (reason === 'input-changed') {
       changeSearchQueryDebounced(value, props);
     }
@@ -65,6 +65,7 @@ const AutocompleteSearch = (props) => {
     placeholder: 'Type a film title',
     value: queryValue,
     onChange,
+    className: 'autocomplete__input',
   };
 
   const history = useHistory();

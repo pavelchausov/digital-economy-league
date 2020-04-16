@@ -61,7 +61,7 @@ const Paging = (props) => {
   const isPrevDisabled = () => (parseInt(currentPage, 10) === 1);
   const isNextDisabled = () => (parseInt(currentPage, 10) === parseInt(totalPagesCount, 10));
 
-  if (query === '' || parseInt(totalPagesCount, 10) === 1) {
+  if (parseInt(totalPagesCount, 10) === 1) {
     return (<></>);
   }
   return (
@@ -75,7 +75,8 @@ const Paging = (props) => {
           Previous
         </button>
         <span>
-          Current: {currentPage}
+          <span>Current: </span>
+          {currentPage}
         </span>
         <button
           type="button"
@@ -97,7 +98,8 @@ const Paging = (props) => {
         <button type="button" onClick={handleMoveClick}>Move</button>
       </div>
       <div>
-        total: {totalPagesCount}
+        <span>total: </span>
+        {totalPagesCount}
       </div>
     </div>
   );

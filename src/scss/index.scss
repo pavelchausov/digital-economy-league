@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 body {
   background-color: midnightblue;
@@ -23,4 +24,46 @@ h1 {
 .films-card {
   display: block;
   width: 45%;
+}
+
+$autocomplete-width: 300px;
+.autocomplete__input {
+  width: $autocomplete-width;
+}
+.react-autosuggest__container {
+  position: relative;
+}
+.react-autosuggest__suggestions-container {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  background: #fff;
+  width: 100%;
+  max-width: $autocomplete-width;
+  border: 1px solid #e4e7e9;
+  ul.react-autosuggest__suggestions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    .react-autosuggest__suggestion {
+      height: 20px;
+      &.react-autosuggest__suggestion--highlighted {
+        background: #d9e6f2;
+      }
+      a {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        color: #000;
+      }
+    }
+  }
+}
+
+.film-detail {
+  .film-detail__data-wrap {
+    display: flex;
+  }
 }

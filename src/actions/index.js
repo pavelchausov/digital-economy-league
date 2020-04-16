@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { debounce } from 'underscore';
 
 const apikey = '66f7d889';
 
@@ -19,7 +20,7 @@ const setFindedFilms = (payload) => ({
 
 const setSearchQuery = (payload) => ({
   type: 'CHANGE_MAIN_SEARCH_QUERY',
-  payload,
+  payload: payload.trim(),
 });
 
 const setSearchPageNumber = (payload) => ({
@@ -32,13 +33,17 @@ const setSearchTotalPages = (payload) => ({
 });
 
 const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
-  if (query.length < 3) {
+  const trimQuery = query.trim();
+  if (trimQuery.length < 3) {
+    dispatch(setFindedFilms([]));
+    dispatch(setSearchPageNumber(1));
+    dispatch(setSearchTotalPages(1));
     return;
   }
   dispatch(setMainPageLoadingStatus(true));
-  console.log('main search started: ' + query);
+  // console.log('main search started: ' + trimQuery);
   axios
-    .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${query}&page=${page}`)
+    .get(`http://www.omdbapi.com/?apikey=${apikey}&s=${trimQuery}&page=${page}`)
     .then((res) => {
       const { data } = res;
       const { Search, Response, totalResults } = data;
@@ -49,11 +54,14 @@ const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
       } else {
         dispatch(setFindedFilms([]));
         dispatch(setSearchPageNumber(1));
+        dispatch(setSearchTotalPages(1));
       }
       dispatch(setMainPageLoadingStatus(false));
     })
     .catch((error) => {
       dispatch(setFindedFilms([]));
+      dispatch(setSearchPageNumber(1));
+      dispatch(setSearchTotalPages(1));
       console.log(error);
     });
 };

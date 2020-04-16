@@ -23,13 +23,11 @@ const DetailPage = (props) => {
     setFilmId(filmId);
   });
   return (
-    <>
+    <div className="main-container">
       <Link to="/">Назад</Link>
       <AutocompleteSearch />
-      <div className="main-container">
-        <FilmDetail />
-      </div>
-    </>
+      <FilmDetail />
+    </div>
   );
 };
 
