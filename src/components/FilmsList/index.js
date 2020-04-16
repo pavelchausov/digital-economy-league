@@ -12,6 +12,7 @@ const mapStateToProps = (store) => {
   const {
     state: {
       mainPageFilms: films,
+      mainSearchQuery: searchQuery,
     },
     uiState: {
       isMainPageLoadingData: isDataLoading,
@@ -20,11 +21,32 @@ const mapStateToProps = (store) => {
   return {
     films,
     isDataLoading,
+    searchQuery,
   };
 };
 
+const SearchQuery = ({ query }) => {
+  if (query === '') {
+    return (<></>);
+  }
+  return (
+    <div>
+      <span>Вы искали: </span>
+      <span>
+        &ldquo;
+        {query}
+        &ldquo;
+      </span>
+    </div>
+  );
+};
+
 const FilmsList = (props) => {
-  const { films, isDataLoading } = props;
+  const {
+    films,
+    isDataLoading,
+    searchQuery,
+  } = props;
 
   // return (<></>);
   if (isDataLoading) {
@@ -33,28 +55,31 @@ const FilmsList = (props) => {
     );
   }
   return (
-    <div className="films-container">
-      {films.map((item) => {
-        const {
-          Title: title,
-          Year: year,
-          Poster: posterSrc,
-          imdbID,
-        } = item;
-        return (
-          <Link key={imdbID} to={`/film/${imdbID}`}>
-            <div className="film-card">
-              <img src={posterSrc} alt="poster" />
-              <h6>{title}</h6>
-              <div className="film-card__year-block">
-                <span className="film-card__year-label">Год: </span>
-                <span className="film-card__year-value">{year}</span>
+    <>
+      <SearchQuery query={searchQuery} />
+      <div className="films-container">
+        {films.map((item) => {
+          const {
+            Title: title,
+            Year: year,
+            Poster: posterSrc,
+            imdbID,
+          } = item;
+          return (
+            <Link key={imdbID} to={`/film/${imdbID}`}>
+              <div className="film-card">
+                <img src={posterSrc} alt="poster" />
+                <h6>{title}</h6>
+                <div className="film-card__year-block">
+                  <span className="film-card__year-label">Год: </span>
+                  <span className="film-card__year-value">{year}</span>
+                </div>
               </div>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

@@ -3,7 +3,6 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setDetailFilmId, setDetailFilmDataAsync } from '../../actions';
 
-
 const mapStateToProps = (store) => {
   const {
     state: {
@@ -18,6 +17,7 @@ const mapStateToProps = (store) => {
     isDataLoading,
   };
 };
+
 const FilmsDetail = (props) => {
   const {
     filmData,
