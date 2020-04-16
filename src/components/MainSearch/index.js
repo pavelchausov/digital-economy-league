@@ -4,7 +4,7 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { debounce } from 'underscore';
 import { setSearchQuery, setFindedFilmsAsync } from '../../actions';
-
+import './MainSearch.scss';
 
 const mapStateToProps = () => ({});
 const changeSearchQuery = (query, props) => {
@@ -19,8 +19,14 @@ const MainSearch = (props) => {
     changeSearchQueryDebounced(e.target.value, props);
   };
   return (
-    <div className="search-container">
-      <input type="search" onChange={handleChange} />
+    <div className="main-search-container">
+      <input
+        type="search"
+        onChange={handleChange}
+        placeholder="Введите название фильма для поиска"
+        className="main-search"
+        maxLength="80"
+      />
     </div>
   );
 };

@@ -1,0 +1,18 @@
+.search-query {
+  padding: 15px 0;
+  display: flex;
+  .query-block {
+    margin-right: 25px;
+  }
+  .total-cnt-block {
+    
+  }
+  .search-query__label {
+    color: #596472;
+    font-size: 14px;
+  }
+  .search-query__value {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}

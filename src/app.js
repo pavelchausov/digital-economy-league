@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom';
 import { DetailPage, MainPage } from './pages';
 
+import 'normalize.css';
+import './App.scss';
 
 const App = () => (
   <Router>

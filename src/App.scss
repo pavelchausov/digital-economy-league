@@ -9,21 +9,15 @@ body {
 h1 {
   margin: 0;
 }
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
 .main-container {
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 30px;
   background: #fff;
-}
-.films-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.films-card {
-  display: block;
-  width: 45%;
 }
 
 $autocomplete-width: 300px;

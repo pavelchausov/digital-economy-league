@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import SearchQuery from './SearchQuery';
 
-// const mapStateToProps = ({ mainPageFilms, isMainPageLoadingData }) => ({
-//   films: mainPageFilms,
-//   isDataLoading: isMainPageLoadingData,
-// });
+import noImg from '../../assets/no-image-available.png';
+import './FilmsList.scss';
 
 const mapStateToProps = (store) => {
   const {
@@ -26,32 +25,6 @@ const mapStateToProps = (store) => {
   };
 };
 
-const SearchQuery = ({ query, resultsCount }) => {
-  if (query === '') {
-    return (<></>);
-  }
-  return (
-    <div>
-      <div>
-        <span>Вы искали: </span>
-        <span>
-          &ldquo;
-          {query}
-          &ldquo;
-        </span>
-      </div>
-      <div>
-        <span>Всего результатов: </span>
-        <span>
-          &ldquo;
-          {resultsCount}
-          &ldquo;
-        </span>
-      </div>
-    </div>
-  );
-};
-
 const FilmsList = (props) => {
   const {
     films,
@@ -60,7 +33,6 @@ const FilmsList = (props) => {
     isDataLoading,
   } = props;
 
-  // return (<></>);
   if (isDataLoading) {
     return (
       <div>LOADING...</div>
@@ -77,11 +49,16 @@ const FilmsList = (props) => {
             Poster: posterSrc,
             imdbID,
           } = item;
+          // const imgSrc = (posterSrc)
           return (
             <Link key={imdbID} to={`/film/${imdbID}`}>
               <div className="film-card">
-                <img src={posterSrc} alt="poster" />
-                <h6>{title}</h6>
+                <img
+                  src={noImg}
+                  alt="poster"
+                  className="film-card__img"
+                />
+                <h4 className="film-card__title">{title}</h4>
                 <div className="film-card__year-block">
                   <span className="film-card__year-label">Год: </span>
                   <span className="film-card__year-value">{year}</span>
