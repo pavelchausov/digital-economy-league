@@ -1,5 +1,4 @@
 import React from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ const mapStateToProps = (store) => {
     state: {
       mainPageFilms: films,
       mainSearchQuery: searchQuery,
+      totalFilmsCount: resultsCount,
     },
     uiState: {
       isMainPageLoadingData: isDataLoading,
@@ -20,23 +20,34 @@ const mapStateToProps = (store) => {
   } = store;
   return {
     films,
-    isDataLoading,
     searchQuery,
+    resultsCount,
+    isDataLoading,
   };
 };
 
-const SearchQuery = ({ query }) => {
+const SearchQuery = ({ query, resultsCount }) => {
   if (query === '') {
     return (<></>);
   }
   return (
     <div>
-      <span>Вы искали: </span>
-      <span>
-        &ldquo;
-        {query}
-        &ldquo;
-      </span>
+      <div>
+        <span>Вы искали: </span>
+        <span>
+          &ldquo;
+          {query}
+          &ldquo;
+        </span>
+      </div>
+      <div>
+        <span>Всего результатов: </span>
+        <span>
+          &ldquo;
+          {resultsCount}
+          &ldquo;
+        </span>
+      </div>
     </div>
   );
 };
@@ -44,8 +55,9 @@ const SearchQuery = ({ query }) => {
 const FilmsList = (props) => {
   const {
     films,
-    isDataLoading,
     searchQuery,
+    resultsCount,
+    isDataLoading,
   } = props;
 
   // return (<></>);
@@ -56,7 +68,7 @@ const FilmsList = (props) => {
   }
   return (
     <>
-      <SearchQuery query={searchQuery} />
+      <SearchQuery query={searchQuery} resultsCount={resultsCount} />
       <div className="films-container">
         {films.map((item) => {
           const {

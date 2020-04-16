@@ -71,6 +71,13 @@ test('reducers', () => {
     ...initialState,
     mainSearchTotalPages: 555,
   });
+  expect(reducers(initialState, {
+    type: 'CHANGE_TOTAL_FILMS_COUNT',
+    payload: 666,
+  })).toEqual({
+    ...initialState,
+    totalFilmsCount: 666,
+  });
 });
 
 test('ui state reducers', () => {

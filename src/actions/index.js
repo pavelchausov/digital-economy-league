@@ -26,17 +26,43 @@ const setSearchPageNumber = (payload) => ({
   type: 'SET_SEARCH_PAGE_NUMBER',
   payload,
 });
+
 const setSearchTotalPages = (payload) => ({
   type: 'SET_SEARCH_TOTAL_PAGES',
   payload,
 });
 
+const setTotalFilmsCount = (payload) => ({
+  type: 'CHANGE_TOTAL_FILMS_COUNT',
+  payload,
+});
+
+const setMainPageSearchResults = (
+  dispatch,
+  {
+    films,
+    pageNumber,
+    totalPages,
+    totalFilms,
+  },
+) => {
+  dispatch(setFindedFilms([...films]));
+  dispatch(setSearchPageNumber(pageNumber));
+  dispatch(setSearchTotalPages(totalPages));
+  dispatch(setTotalFilmsCount(totalFilms));
+};
+
+const emptySearchResult = {
+  films: [],
+  pageNumber: 1,
+  totalPages: 1,
+  totalFilms: 0,
+};
+
 const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
   const trimQuery = query.trim();
   if (trimQuery.length < 3) {
-    dispatch(setFindedFilms([]));
-    dispatch(setSearchPageNumber(1));
-    dispatch(setSearchTotalPages(1));
+    setMainPageSearchResults(dispatch, emptySearchResult);
     return;
   }
   dispatch(setMainPageLoadingStatus(true));
@@ -47,20 +73,19 @@ const setFindedFilmsAsync = (query, page = 1) => (dispatch) => {
       const { data } = res;
       const { Search, Response, totalResults } = data;
       if (Response === 'True') {
-        dispatch(setFindedFilms([...Search]));
-        dispatch(setSearchPageNumber(page));
-        dispatch(setSearchTotalPages(Math.ceil(totalResults / 10)));
+        setMainPageSearchResults(dispatch, {
+          films: [...Search],
+          pageNumber: page,
+          totalPages: Math.ceil(totalResults / 10),
+          totalFilms: totalResults,
+        });
       } else {
-        dispatch(setFindedFilms([]));
-        dispatch(setSearchPageNumber(1));
-        dispatch(setSearchTotalPages(1));
+        setMainPageSearchResults(dispatch, emptySearchResult);
       }
       dispatch(setMainPageLoadingStatus(false));
     })
     .catch((error) => {
-      dispatch(setFindedFilms([]));
-      dispatch(setSearchPageNumber(1));
-      dispatch(setSearchTotalPages(1));
+      setMainPageSearchResults(dispatch, emptySearchResult);
       console.log(error);
     });
 };

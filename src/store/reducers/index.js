@@ -2,6 +2,7 @@ const initialState = {
   mainSearchQuery: '',
   mainSearchPageNumber: 1,
   mainSearchTotalPages: 1,
+  totalFilmsCount: 0,
   mainPageFilms: [],
   detailFilmId: null,
   detailFilmInfo: {},
@@ -37,6 +38,13 @@ const reducers = (state = initialState, action) => {
       return {
         ...state,
         mainSearchTotalPages: payload,
+      };
+    }
+    case 'CHANGE_TOTAL_FILMS_COUNT': {
+      const { payload } = action;
+      return {
+        ...state,
+        totalFilmsCount: payload,
       };
     }
     case 'SET_DETAIL_FILM_ID': {
