@@ -23,7 +23,7 @@ const DetailPage = (props) => {
   });
   return (
     <div className="main-container">
-      <Link to="/">Назад</Link>
+      <Link to="/">На главную</Link>
       <AutocompleteSearch />
       <FilmDetail />
     </div>

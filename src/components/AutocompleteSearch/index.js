@@ -6,6 +6,8 @@ import { debounce } from 'underscore';
 import { withRouter, Link, useHistory } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 import { setAutocompleteSearchQuery, setAutocompleteSearchResultAsync } from '../../actions';
+import './AutocompleteSearch.scss';
+import loadingGif from '../../assets/loading.gif';
 
 const mapStateToProps = ({ state, uiState }) => {
   const { autocompleteSearchResult } = state;
@@ -80,7 +82,7 @@ const AutocompleteSearch = (props) => {
     history.push(link);
   };
   return (
-    <>
+    <div className="autocomplete-block">
       <Autosuggest
         suggestions={autocompleteSearchResult}
         onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -91,7 +93,7 @@ const AutocompleteSearch = (props) => {
         onSuggestionSelected={onSuggestionSelected}
       />
       <DataLoadingStatus isLoading={isAutocompleteLoadingData} />
-    </>
+    </div>
   );
 };
 
@@ -100,7 +102,11 @@ const DataLoadingStatus = ({ isLoading }) => {
     return (<></>);
   }
   return (
-    <div>LOADING...</div>
+    <div className="autocomplete-loading">
+      <div className="autocomplete-loading__msg">
+        <img className="autocomplete-loading__gif" src={loadingGif} alt="loading" />
+      </div>
+    </div>
   );
 };
 

@@ -3,8 +3,7 @@
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 body {
-  background-color: midnightblue;
-  background-color: gray;
+  background-color: #175aae;
 }
 h1 {
   margin: 0;
@@ -15,49 +14,18 @@ img {
 
 .main-container {
   max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 30px;
+  margin: 15px auto;
+  padding: 30px;
   background: #fff;
+  min-height: calc(100vh - 30px);
 }
-
-$autocomplete-width: 300px;
-.autocomplete__input {
-  width: $autocomplete-width;
-}
-.react-autosuggest__container {
-  position: relative;
-}
-.react-autosuggest__suggestions-container {
-  position: absolute;
-  top: 25px;
-  left: 0;
-  background: #fff;
+.films-loading {
   width: 100%;
-  max-width: $autocomplete-width;
-  border: 1px solid #e4e7e9;
-  ul.react-autosuggest__suggestions-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    .react-autosuggest__suggestion {
-      height: 20px;
-      &.react-autosuggest__suggestion--highlighted {
-        background: #d9e6f2;
-      }
-      a {
-        display: block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        text-decoration: none;
-        color: #000;
-      }
-    }
-  }
-}
-
-.film-detail {
-  .film-detail__data-wrap {
-    display: flex;
+  height: calc(100vh - 210px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .films-loading__gif {
+    width: 200px;
   }
 }

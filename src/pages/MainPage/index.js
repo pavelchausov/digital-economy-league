@@ -5,7 +5,7 @@ import Paging from '../../components/Paging';
 import './MainPage.scss';
 
 const MainPage = () => (
-  <div className="main-container main-page">
+  <div className="main-container">
     <h1>Поиск фильмов</h1>
     <MainSearch />
     <FilmList />

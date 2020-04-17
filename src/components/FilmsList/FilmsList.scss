@@ -1,12 +1,16 @@
 .films-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   a {
     text-decoration: none;
   }
 }
-
+.film-card-container {
+  width: 248px;
+  display: flex;
+  justify-content: center;
+}
 .film-card {
   width: 230px;
   height: 440px;
@@ -17,7 +21,7 @@
   color: #000;
   padding-bottom: 5px;
   &:hover {
-    box-shadow: 0 0px 5px 3px rgba(41, 9, 253, 0.24);
+    box-shadow: 0 0px 5px 3px #175aae;
   }
   .film-card__img {
     display: block;
@@ -27,7 +31,7 @@
     margin-top: auto;
     margin-bottom: 5px;
     align-self: flex-start;
-    height: 54px;
+    height: 68px;
     padding: 0 5px;
   }
   .film-card__year-block {

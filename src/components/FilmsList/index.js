@@ -1,9 +1,11 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SearchQuery from './SearchQuery';
 
 import noImg from '../../assets/no-image-available.png';
+import loadingGif from '../../assets/loading.gif';
 import './FilmsList.scss';
 
 const mapStateToProps = (store) => {
@@ -35,7 +37,9 @@ const FilmsList = (props) => {
 
   if (isDataLoading) {
     return (
-      <div>LOADING...</div>
+      <div className="films-loading">
+        <img className="films-loading__gif" src={loadingGif} alt="loading" />
+      </div>
     );
   }
   return (
@@ -51,20 +55,22 @@ const FilmsList = (props) => {
           } = item;
           const imgSrc = (posterSrc === 'N/A') ? noImg : posterSrc;
           return (
-            <Link key={imdbID} to={`/film/${imdbID}`}>
-              <div className="film-card">
-                <img
-                  src={imgSrc}
-                  alt="poster"
-                  className="film-card__img"
-                />
-                <h4 className="film-card__title">{title}</h4>
-                <div className="film-card__year-block">
-                  <span className="film-card__year-label">Год: </span>
-                  <span className="film-card__year-value">{year}</span>
+            <div key={`${imdbID}l${year}`} className="film-card-container">
+              <Link to={`/film/${imdbID}`}>
+                <div className="film-card">
+                  <img
+                    src={imgSrc}
+                    alt="poster"
+                    className="film-card__img"
+                  />
+                  <h4 className="film-card__title">{title}</h4>
+                  <div className="film-card__year-block">
+                    <span className="film-card__year-label">Год: </span>
+                    <span className="film-card__year-value">{year}</span>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           );
         })}
       </div>

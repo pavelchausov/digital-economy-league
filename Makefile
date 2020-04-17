@@ -1,8 +1,8 @@
 start:
-	npm run react-dev
+	npm run start
 
 build:
-	npm run react-prod
+	npm run build
 
 lint:
 	npm run lint

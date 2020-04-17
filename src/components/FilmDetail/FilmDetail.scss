@@ -1,0 +1,29 @@
+.film-detail {
+  .film-detail__data-wrap {
+    display: flex;
+  }
+}
+.poster-wrap {
+  display: flex;
+  width: 320px;
+  justify-content: center;
+  margin-right: 25px;
+}
+.film-detail__data {
+  max-width: 700px;
+}
+.film-detail__field {
+  .film-detail__field-nom {
+    color: #596472;
+  }
+  .film-detail__field-val {
+
+  }
+}
+
+.error-msg {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: red;
+}
